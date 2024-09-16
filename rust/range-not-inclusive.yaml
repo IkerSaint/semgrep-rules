@@ -1,0 +1,24 @@
+rules:
+  - id: range-not-inclusive
+    languages:
+      - rust
+    message: >
+      Range almost include the entire range of elements, but don't, because is a half
+      open range.
+    severity: INFO
+    metadata:
+      likelihood: LOW
+      impact: LOW
+      confidence: LOW
+      category: correctness
+      subcategory:
+        - audit
+      references:
+        - https://doc.rust-lang.org/reference/expressions/range-expr.html
+      technology:
+        - rust
+      license: Copyright 2024 Carlos Rodriguez.
+    patterns:
+      - pattern-either:
+        - pattern: $START..$END
+        - pattern: ..$END

@@ -1,0 +1,30 @@
+rules:
+  - id: eager-functions
+    languages:
+      - rust
+    message: >
+      Eager methods means that the expression is executed regardless of whether the
+      condition is true or false. If you are passing the result of a function call,
+      this can introduce bugs or subtle vulnerabilities; prefer the lazy variants
+      such as "unwrap_or_else", "map_or_else", "ok_or_else", "and_then", etc.
+    severity: INFO
+    metadata:
+      likelihood: LOW
+      impact: LOW
+      confidence: LOW
+      category: correctness
+      subcategory:
+        - audit
+      references:
+        - https://doc.rust-lang.org/reference/expressions/range-expr.html
+      technology:
+        - rust
+      license: Copyright 2024 Carlos Rodriguez.
+    patterns:
+      - pattern-either:
+        - pattern: $X.unwrap_or(...)
+        - pattern: $X.map_or(...)
+        - pattern: $X.ok_or(...)
+        - pattern: $X.and(...)
+        - pattern: $X.or(...)
+        - pattern: $X.then_some(...)
