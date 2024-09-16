@@ -1,0 +1,35 @@
+rules:
+  - id: join-path-traversal
+    languages:
+      - python
+    message: >
+      Using path.join may is risky because if one of the paramters is controlled
+      by an user, it's possible to performe a path traversal attack.
+    severity: WARNING
+    metadata:
+      likelihood: HIGH
+      impact: HIGH
+      confidence: HIGH
+      category: security
+      subcategory:
+        - vuln
+      cwe:
+        - "CWE-35: Path Traversal"
+      cwe2021-top25: true
+      cwe2022-top25: true
+      cwe2023-top25: true
+      owasp:
+        - A01:2021 - Broken Access Control
+      references:
+        - https://owasp.org/www-community/attacks/Path_Traversal
+        - https://github.com/OWASP/wstg/blob/master/document/4-Web_Application_Security_Testing/05-Authorization_Testing/01-Testing_Directory_Traversal_File_Include.md
+        - https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
+      technology:
+        - python
+      license: Copyright 2024 Carlos Rodriguez.
+      vulnerability_class:
+        - Broken Access Control
+    patterns:
+      - pattern-either:
+        - pattern: os.path.join(...)
+        - pattern: path.join(...)
