@@ -1,0 +1,30 @@
+rules:
+  - id: vector-size-controlled-by-user
+    languages:
+      - rust
+    message: >
+      Found call to '$STRUCT::with_capacity' on non constant data
+    severity: INFO
+    metadata:
+      likelihood: LOW
+      impact: HIGH
+      confidence: MEDIUM
+      category: security
+      subcategory:
+        - vuln
+      cwe:
+        - "CWE-770: Allocation of Resources Without Limits or Throttling"
+      cwe2021-top25: true
+      cwe2022-top25: true
+      cwe2023-top25: true
+      references:
+        - https://owasp.org/API-Security/editions/2023/en/0xa4-unrestricted-resource-consumption/
+        - https://cwe.mitre.org/data/definitions/770.html
+      technology:
+        - rust
+      license: Copyright 2024 Carlos Rodriguez.
+      vulnerability_class:
+        - Uncontrolled Resource Consumption
+    patterns:
+      - pattern: $STRUCT::with_capacity(...)
+      - pattern-not: $STRUCT::with_capacity("...")

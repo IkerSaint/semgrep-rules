@@ -1,0 +1,27 @@
+rules:
+  - id: join-path-traversal
+    languages:
+      - kotlin
+    message: >
+      Thread.sleep() is a blocking function that pauses the execution of the current
+      thread for a specified amount of time. When used in a coroutine, it blocks the
+      entire thread, preventing other coroutines from executing concurrently. This
+      can lead to poor performance and unresponsiveness in your application, prefer
+      the use of delay.
+    severity: INFO
+    metadata:
+      likelihood: LOW
+      impact: HIGH
+      confidence: HIGH
+      category: performance
+      subcategory:
+        - audit
+      references:
+        - https://kotlinlang.org/api/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines/delay.html
+        - https://kotlinlang.org/docs/coroutines-basics.html#coroutines-are-light-weight
+      technology:
+        - kotlin
+      license: Copyright 2024 Carlos Rodriguez.
+    patterns:
+      - pattern-either:
+        - pattern: Thread.sleep(...)
