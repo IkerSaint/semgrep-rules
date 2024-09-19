@@ -1,0 +1,40 @@
+rules:
+  - id: panic-in-function-with-result
+    languages:
+      - rust
+    message: >
+      'expect' or 'unwrap' is being called in a function returning a `Result`. This is
+      an anti-pattern, as functions that return a result are expected to return and
+      error in case of failure instead of panicking.
+    severity: INFO
+    metadata:
+      likelihood: MEDIUM
+      impact: MEDIUM
+      confidence: HIGH
+      category: correctness
+      subcategory:
+        - audit
+      references:
+        - https://doc.rust-lang.org/reference/expressions/range-expr.html
+      technology:
+        - rust
+      license: Copyright 2024 Carlos Rodriguez.
+    patterns:
+      - pattern-either:
+        - pattern: $E.unwrap()
+        - pattern: $E.expect(...)
+      - patterns:
+        - pattern-either:
+          - pattern-inside: |
+              fn $F(...) -> $RET {
+                  ...
+                  Ok(...)
+              }
+          - patterns:
+            - pattern-inside: |
+                fn $F(...) -> $RET {
+                    ...
+                }
+            - metavariable-regex:
+                metavariable: $RET
+                regex: (Result)
