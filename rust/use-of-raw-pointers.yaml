@@ -1,0 +1,46 @@
+rules:
+  - id: use-of-raw-pointers
+    languages:
+      - rust
+    message: >
+      Raw pointers detected, this pointers are unsafe to use. Raw pointers don't
+      have compile-time checks guarantees, because of that, they are several
+      potential pitfalls:
+      - They are not guaranteed to point to valid memory, and are not even guaranteed
+        to be non-NULL.
+      - Do not have any automatic clean-up, and so require manual resource management.
+      - They don't move ownership, hence the Rust compiler cannot protect against
+        bugs like use-after-free.
+      - They don't make use of lifetimes, and so the compiler cannot reason about
+        dangling pointers.
+      - They don't have any guarantees about aliasing or mutability other than mutation
+        not being allowed directly through a *const T.
+    severity: WARNING
+    metadata:
+      likelihood: LOW
+      impact: MEDIUM
+      confidence: MEDIUM
+      category: security
+      subcategory:
+        - vuln
+      cwe:
+        - "CWE-676: Use of Potentially Dangerous Function"
+        - "CWE-476: NULL Pointer Dereference"
+      cwe2021-top25: true
+      cwe2022-top25: true
+      cwe2023-top25: true
+      references:
+        - https://doc.rust-lang.org/std/primitive.pointer.html
+        - https://cwe.mitre.org/data/definitions/676.html
+      technology:
+        - rust
+      license: Copyright 2024 Carlos Rodriguez.
+      vulnerability_class:
+        - Use of Potentially Dangerous Function
+    patterns:
+      - pattern-either:
+        - pattern-regex: as \*const
+        - pattern-regex: as \*mut
+        - pattern-regex: ': \*const'
+        - pattern-regex: ': \*mut'
+        - pattern: std::ptr::addr_of!(...)
