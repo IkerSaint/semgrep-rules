@@ -44,3 +44,4 @@ rules:
         - pattern-regex: ': \*const'
         - pattern-regex: ': \*mut'
         - pattern: std::ptr::addr_of!(...)
+        - pattern: $X.as_ptr()

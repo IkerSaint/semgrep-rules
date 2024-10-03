@@ -26,4 +26,7 @@ fn main() {
 
   let e = 0x012345usize;
   let raw_e = e as *const i32;
+
+  let s: &str = "123";
+  let ptr = s.as_ptr();
 }
