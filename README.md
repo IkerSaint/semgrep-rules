@@ -35,7 +35,7 @@ $ semgrep --config /path/to/semgrep-rules/ . --exclude='*_test.go'
 Use `-o` to output results to a file:
 
 ```shell
-$ semgrep --config /path/to/semgrep-rules/hanging-goroutine.yml -o leaks.txt'
+$ semgrep --config /path/to/semgrep-rules/rule.yml -o results.txt'
 ```
 
 ## Rules
