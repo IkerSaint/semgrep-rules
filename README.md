@@ -1,6 +1,6 @@
 # Public Semgrep rules
 
-This repository contains Semgrep rules developed by meand made available to the public. They are part of my personal experience performing security audits, code reviews, vulnerability reseach, and other projects. 
+This repository contains Semgrep rules developed by me and made available to the public. They are part of my personal experience performing security audits, code reviews, vulnerability reseach, and other projects. 
 
 Visit [Testing Handbook](https://appsec.guide/docs/static-analysis/semgrep/) for Semgrep guidance.
 
