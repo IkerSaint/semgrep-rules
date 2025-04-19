@@ -22,3 +22,6 @@ rules:
       - pattern-either:
         - pattern: $START..$END
         - pattern: ..$END
+      - metavariable-regex:
+          metavariable: $END
+          regex: (^default)
