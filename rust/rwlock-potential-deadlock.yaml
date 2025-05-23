@@ -1,0 +1,31 @@
+rules:
+  - id: rwlock-potential-deadlock
+    languages:
+      - rust
+    message: >
+      In Rust 2021, variables declared as a part of an if let statement are held
+      for the entire statement, including the else block; which may cause subtle
+      deadlocks.
+    severity: MEDIUM
+    metadata:
+      likelihood: LOW
+      impact: HIGH
+      confidence: MEDIUM
+      category: correctness
+      subcategory:
+        - audit
+      references:
+        - https://github.com/rust-lang/rust/issues/124085
+      technology:
+        - rust
+      license: Copyright 2024 Carlos Rodriguez.
+    patterns:
+      - pattern: |
+          let $RW = RwLock::new(...);
+
+          if let $VARR = *$RW.read(). ... {
+            ...
+          } else {
+            ...
+            let mut $VARW = $RW.write(). ...;
+          }

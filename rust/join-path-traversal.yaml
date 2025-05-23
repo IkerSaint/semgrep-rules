@@ -1,9 +1,9 @@
 rules:
   - id: join-path-traversal
     languages:
-      - python
+      - rust
     message: >
-      Using path.join is risky because if one of the paramters is controlled
+      Using join is risky because if one of the paramters is controlled
       by an user, it's possible to performe a path traversal attack.
     severity: WARNING
     metadata:
@@ -23,13 +23,14 @@ rules:
       references:
         - https://owasp.org/www-community/attacks/Path_Traversal
         - https://github.com/OWASP/wstg/blob/master/document/4-Web_Application_Security_Testing/05-Authorization_Testing/01-Testing_Directory_Traversal_File_Include.md
-        - https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html
       technology:
-        - python
+        - rust
       license: Copyright 2024 Carlos Rodriguez.
       vulnerability_class:
         - Broken Access Control
     patterns:
       - pattern-either:
-        - pattern: os.path.join(...)
-        - pattern: path.join(...)
+          - pattern: std::path::Path::new(...).join($PATH,...)
+          - pattern: Path::new(...).join($PATH,...)
+          - pattern: |
+                  ($P: std::path::Path).join($PATH,...)
